@@ -1,30 +1,38 @@
 package com.restapi.project.review.Model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity                      //represents a table stored in a database//
-@Table(name="Property")      //entity should be mapped to a database table named "Property"//
+@Entity                      
+@Table(name="booking")      
 
 public class bmsmodel {
   
-	@Id                        // marks primary key of the entity//
-	@GeneratedValue(strategy = GenerationType.IDENTITY) //it indicates that the primary keyvalues will be automatically generated using an identity column strategy//
-	private int bookingId;
-	private int userId;
-	@Column(name="bms")       //maps it to a database column named "bms"//
+	@Id                        
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="bid")
+	private long bid;
+	private int userId;      
 	private String date;
 	private int guestcount;
 	private int cost;
-	public int getBookingId() {
-		return bookingId;
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="fk_bid" , referencedColumnName ="bid")
+	private List<paymentmodel> paymentmodel;
+	public long getBid() {
+		return bid;
 	}
-	public void setBookingId(int bookingId) {
-		this.bookingId = bookingId;
+	public void setBid(long bid) {
+		this.bid = bid;
 	}
 	public int getUserId() {
 		return userId;
@@ -49,6 +57,12 @@ public class bmsmodel {
 	}
 	public void setCost(int cost) {
 		this.cost = cost;
+	}
+	public List<paymentmodel> getPaymentmodel() {
+		return paymentmodel;
+	}
+	public void setPaymentmodel(List<paymentmodel> paymentmodel) {
+		this.paymentmodel = paymentmodel;
 	}
 	
 	
